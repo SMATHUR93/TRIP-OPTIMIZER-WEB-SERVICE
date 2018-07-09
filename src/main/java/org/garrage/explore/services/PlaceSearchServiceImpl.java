@@ -29,7 +29,7 @@ public class PlaceSearchServiceImpl implements PlaceSearchService {
     public PlacesResponse getAllPlaces(String place) {
         try {
             PlacesResponse placesResponse = googleService.getPlaces(place);
-
+            return placesResponse;
         } catch (Exception exception) {
             return new PlacesResponse();
         }

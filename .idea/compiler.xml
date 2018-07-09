@@ -9,8 +9,5 @@
         <module name="explore" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="explore" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
