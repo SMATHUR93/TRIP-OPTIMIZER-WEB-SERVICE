@@ -7,3 +7,6 @@ Follow the given steps to build the project:
 
 command to run the service:
 $java -jar target/explore-0.0.1-SNAPSHOT.jar
+
+Hit the following api to check:
+http://localhost:8080/api/health
