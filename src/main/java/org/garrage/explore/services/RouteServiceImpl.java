@@ -1,15 +1,11 @@
 package org.garrage.explore.services;
 
-import com.sun.deploy.util.OrderedHashSet;
-import com.sun.org.apache.xml.internal.serializer.ElemDesc;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.garrage.explore.GoogleGateway.GoogleService;
 import org.garrage.explore.GoogleGateway.model.DistanceResponse;
 import org.garrage.explore.GoogleGateway.model.Element;
-import org.garrage.explore.GoogleGateway.model.Row;
-import org.garrage.explore.model.OptimalRouteResponse;
 import org.garrage.explore.model.PlaceNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Service
