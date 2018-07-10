@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+		<title>Trip Optimizer</title>
+		<base href="."> 
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+
+		<!-- jQuery library -->
+		<script src="libs/jquery-3.3.1.min.js"></script>
+
+		<!-- Latest compiled and minified CSS -->
+		
+		<link rel="stylesheet" href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css" type="text/css" />
+		<link rel="stylesheet" href="libs/bootstrap-4.0.0-dist/css/bootstrap-theme.min.css"  type="text/css" />
+		<link rel="stylesheet" href="libs/bootstrap-4.0.0-dist/css/bootstrap.min.css.map"  type="text/css" />
+		<link rel="stylesheet" href="libs/bootstrap-4.0.0-dist/css/bootstrap-theme.min.css.map"  type="text/css" />
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+		<!-- Custom CSS styles file -->
+		<link rel="stylesheet" href="styles.css"  type="text/css" />
+
+		<!-- Latest compiled JavaScript -->
+		<script src="libs/bootstrap-4.0.0-dist/js/bootstrap.min.js"></script>
+
+		<!-- AngularJS 1.6.9 Library -->
+		<script src="libs/angular.min.js"></script>
+
+		<!-- Google maps API JS -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMuEMiBJZE75aQj5KXCu_FbNTdxA9WBJg&libraries=places"></script>
+
+		<!-- Angular app file -->
+		<script src="app/app.js"></script>
+
+		<!-- Angular directive for autocomplete of search -->
+		<script src="libs/angularjs-google-maps.js"></script>
+
+	</head>
+	<body>
+
+		<div class="container" ng-app="myApp" ng-controller="tripOptimizerController">
+	    
+			<nav class="navbar bg-dark navbar-dark fixed-top">
+			  <a class="navbar-brand" href="#">Trip Optimizer</a>
+			</nav>
+
+		    <div class="container" style="margin-top:70px;margin-bottom:20px;">
+			  <h5>The trip optimizer is used for finding the best possible travelling path in a trip. A must for all road warriors.</h5>
+			</div>
+		    
+		    <error-message></error-message>
+		    <places-search-combo></places-search-combo>
+		    <source-and-destination-combos></source-and-destination-combos>
+		    <location-cards-carousals-container></location-cards-carousals-container>
+		    <output-optimization-map></output-optimization-map>
+		    <output-path-tiles></output-path-tiles>
+		    
+		    <footer class="footer">
+			    <span class="text-muted">&nbsp;&nbsp;Trip Optimizer version 1.0.0 July 2018.</span>
+			</footer>
+
+		</div>
+
+	</body>
+	<script>
+		(function($) {
+		    "use strict";
+
+		    // manual carousel controls
+		    $('.next').click(function(){ $('.carousel').carousel('next');return false; });
+		    $('.prev').click(function(){ $('.carousel').carousel('prev');return false; });
+		    
+		})(jQuery);
+	</script>
+	
+</html>

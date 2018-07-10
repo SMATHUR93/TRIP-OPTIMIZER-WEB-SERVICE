@@ -1,0 +1,26 @@
+<form  ng-show="isPlaceProvided" name="tripDetailsForm" class="form-horizontal" novalidate 
+		    ng-submit="send()">
+    <div class="form-group">
+        <label for="sourceField" class="col-xs-2 control-label">Source</label>
+        <div class="col-xs-10">
+            <!-- <input name="sourceField" type="text" class="form-control" 
+            ng-model="place.source" required /> -->
+            <select name="sourceField" type="text" class="form-control" 
+            ng-model="place.source" required
+            ng-options="obj for obj in places"> <!-- ng-change="projectFill2()" -->
+            </select> 
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="destinationField" class="col-xs-2 control-label">Destination</label>
+        <div class="col-xs-10">
+            <!-- <input name="destinationField" type="text" class="form-control" 
+            ng-model="place.destination" required /> -->
+            <select name="destinationField" type="text" class="form-control" 
+            ng-model="place.destination" required 
+            ng-options="obj for obj in places">
+            </select> 
+        </div>
+    </div>
+    <hr></hr>
+</form>

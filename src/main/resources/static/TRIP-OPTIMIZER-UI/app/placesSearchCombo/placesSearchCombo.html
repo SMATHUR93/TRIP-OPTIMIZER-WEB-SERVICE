@@ -1,0 +1,11 @@
+<form name="searchForm" novalidate 
+    ng-submit="search()" ng-show="!areLocationsProvided">
+    <div class="input-group">
+        <input name="place" type="text" gm-places-autocomplete ng-model="searchPlace" class="form-control"  required autofocus />
+        <span class="input-group-btn">
+            <button class="btn btn-primary" 
+            ng-disabled="searchForm.$invalid">Search</button>
+        </span>
+    </div>
+	<hr></hr>
+</form>
