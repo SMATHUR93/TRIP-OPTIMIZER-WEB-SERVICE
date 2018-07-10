@@ -7,7 +7,7 @@
             ng-model="place.source" required /> -->
             <select name="sourceField" type="text" class="form-control" 
             ng-model="place.source" required
-            ng-options="obj for obj in places"> <!-- ng-change="projectFill2()" -->
+            ng-options="obj as obj.name for obj in placesData.allplaces"> <!-- ng-change="projectFill2()" -->
             </select> 
         </div>
     </div>
@@ -18,7 +18,7 @@
             ng-model="place.destination" required /> -->
             <select name="destinationField" type="text" class="form-control" 
             ng-model="place.destination" required 
-            ng-options="obj for obj in places">
+            ng-options="obj as obj.name for obj in placesData.allplaces">
             </select> 
         </div>
     </div>

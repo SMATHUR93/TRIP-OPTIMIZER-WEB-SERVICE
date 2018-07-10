@@ -80,7 +80,8 @@ app.controller('tripOptimizerController', function($scope, $http) {
     $scope.isPlaceProvided=true;
     $scope.areLocationsProvided=false;
     $scope.apiError = false;
-    $scope.places = [];
+    $scope.placesData = {};
+    $scope.placesData.allplaces = [];
     
    $scope.search = function() {
         
@@ -104,7 +105,7 @@ app.controller('tripOptimizerController', function($scope, $http) {
             $scope.apiError = false;
         });*/
 
-        var loc = ($scope.searchPlace.gm_accessors_.place.jd.formattedPrediction)?($scope.searchPlace.gm_accessors_.place.jd.formattedPrediction):($scope.searchPlace);
+        var loc = (!$scope.searchPlace.gm_accessors_)?($scope.searchPlace):(($scope.searchPlace.gm_accessors_.place)?($scope.searchPlace.gm_accessors_.place.jd.formattedPrediction):(""));
         var uri = "http://localhost:8080/api/getplaces?place="+loc;
         var resUrl = encodeURI(uri);
         $http({
@@ -112,8 +113,17 @@ app.controller('tripOptimizerController', function($scope, $http) {
             url : resUrl
         }).then(function mySuccess(response) {
             //$scope.myWelcome = response.data;
-            var serverData = response.data.resultMap.all;
-            $scope.places = [];
+            var serverData = response.data.resultMap;
+            Object.getOwnPropertyNames(serverData).forEach(
+              function (val, idx, array) {
+                $scope.placesData[val] = serverData[val];
+                console.log(val + ' -> ' + serverData[val]);
+              }
+            );
+            for(var idx in $scope.placesData.ALL){
+                $scope.placesData.allplaces.push($scope.placesData.ALL[idx]);
+            }
+            //$scope.places = [];
             $scope.apiError = false;
         }, function myError(response) {
             $scope.apiError = true;
