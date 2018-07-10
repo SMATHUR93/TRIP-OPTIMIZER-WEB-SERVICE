@@ -32,8 +32,10 @@ public class PlaceSearchController {
         return placeSearchService.getAllPlaces(place);
     }
 
-    @RequestMapping(value = "/test",method = RequestMethod.POST)
-    public HashMap<String, ArrayList<RouteServiceImpl.Tuple>> test(@RequestBody ArrayList<PlaceNode> optimalRouteRequest ){
+    @RequestMapping(value = "/getoptimalroute",method = RequestMethod.POST)
+    public ArrayList<PlaceNode> getOptimalRoute(@RequestBody ArrayList<PlaceNode> optimalRouteRequest ){
         return routeService.computeOptimalRoute(optimalRouteRequest);
     }
+
+
 }

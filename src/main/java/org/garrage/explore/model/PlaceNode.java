@@ -24,4 +24,11 @@ public class PlaceNode {
     GeoLocation geo_location;
     @JsonProperty("place_id")
     String place_id;
+
+    public PlaceNode(){ }
+
+    public PlaceNode(int seqNo, String placeId) {
+        this.sequence_no = seqNo;
+        this.place_id = placeId;
+    }
 }

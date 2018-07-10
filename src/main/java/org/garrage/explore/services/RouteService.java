@@ -11,6 +11,6 @@ import java.util.List;
 @Service
 public interface RouteService {
 
-    HashMap<String, ArrayList<RouteServiceImpl.Tuple>> computeOptimalRoute(ArrayList<PlaceNode> nodes);
+    ArrayList<PlaceNode> computeOptimalRoute(ArrayList<PlaceNode> nodes);
 
 }
