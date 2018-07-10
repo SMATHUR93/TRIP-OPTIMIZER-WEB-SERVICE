@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class GoogleService {
 
-    final private String key="YOURs";
+    final private String key="AIzaSyCNzudxWQmZi5hC3nHE2w8e0HPwg1sgOSw";
 
     public GeoLocation getGeoLocation(String place) throws Exception {
         String url="https://maps.googleapis.com/maps/api/place/findplacefromtext/json?inputtype=textquery&fields=photos,formatted_address,name,rating,opening_hours,geometry&input="+place+"&key="+key;
@@ -36,7 +36,7 @@ public class GoogleService {
 
     public PlacesResponse getPlaces(String place) throws Exception{
         GeoLocation geoLocation = getGeoLocation(place);
-        String url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=1500&type=point_of_interest,restaurants&key="+key+"&location="+geoLocation.getLat()+","+geoLocation.getLng();
+        String url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?radius=1500&keyword=tourists attractions&key="+key+"&location="+geoLocation.getLat()+","+geoLocation.getLng();
         ResponseEntity<String> responseEntity = getRequest(url);
         if(responseEntity.getStatusCode().equals(HttpStatus.OK)) {
             ObjectMapper objectMapper = new ObjectMapper();

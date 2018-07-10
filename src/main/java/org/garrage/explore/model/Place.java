@@ -9,9 +9,9 @@ import java.util.UUID;
 @Setter
 public class Place {
 
-    UUID id;
+    String id;
     GeoLocation geoLocation;
     String name;
-    Category category;
+    PlaceType placeType;
 
 }
