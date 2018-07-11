@@ -2,6 +2,7 @@ package org.garrage.explore.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.garrage.explore.GoogleGateway.GoogleService;
 import org.garrage.explore.GoogleGateway.model.DistanceResponse;
@@ -20,10 +21,10 @@ public class RouteServiceImpl implements RouteService {
     GoogleService googleService;
 
     @Override
-    public ArrayList<PlaceNode> computeOptimalRoute(ArrayList<PlaceNode> nodes) {
+    public ArrayList<PlaceNode> computeOptimalRoute(ArrayList<PlaceNode> nodes, String source) {
 
         HashMap<String, ArrayList<Tuple>> graph = getGraph(nodes);
-        ArrayList<PlaceNode> sequentialPlaceNodes = getSequentialPlaceNodes(graph);
+        ArrayList<PlaceNode> sequentialPlaceNodes = getSequentialPlaceNodes(graph,source);
         return sequentialPlaceNodes;
 
     }
@@ -49,8 +50,27 @@ public class RouteServiceImpl implements RouteService {
         return graph;
     }
 
-    private ArrayList<PlaceNode> getSequentialPlaceNodes(HashMap<String, ArrayList<Tuple>> graph){
-        ArrayList<PlaceNode> placeListWithIds = new ArrayList<PlaceNode>();
+    private ArrayList<PlaceNode> getSequentialPlaceNodes(HashMap<String, ArrayList<Tuple>> graph, String sourcePlaceId){
+
+
+        ArrayList<PlaceNode> outputSequence = new ArrayList<PlaceNode>();
+        ArrayList<String> visitedNodes = new ArrayList<>();
+        String sourceNodeId = sourcePlaceId;
+        visitedNodes.add(sourceNodeId);
+        int sq=0;
+        int cnt = graph.size()-1;
+        outputSequence.add(new PlaceNode(sq,sourcePlaceId));
+        while((cnt--)>0){
+
+            ArrayList<Tuple> childNodes = graph.get(sourceNodeId);
+            sourceNodeId = getNextNode(childNodes,visitedNodes);
+            visitedNodes.add(sourceNodeId);
+            outputSequence.add(new PlaceNode(++sq,sourceNodeId));
+
+        }
+
+        return outputSequence;
+        /*ArrayList<PlaceNode> placeListWithIds = new ArrayList<PlaceNode>();
         int seqNo = 0;
         String placeId;
         ArrayList<Tuple> listPlaces;
@@ -60,7 +80,7 @@ public class RouteServiceImpl implements RouteService {
         Map.Entry<String,ArrayList<Tuple>> entry  = graph.entrySet().iterator().next();
         placeId = entry.getKey();
         listPlaces = entry.getValue();
-        placeListWithIds.add(new PlaceNode(seqNo,closestPlaceId));
+        placeListWithIds.add(new PlaceNode(seqNo,placeId));
         int size = graph.size();
         int count = 1;
         while(count <= size){
@@ -68,15 +88,15 @@ public class RouteServiceImpl implements RouteService {
                 count+=1;
                 continue;
             }
+            seqNo += 1;
             visited.add(placeId);
             closestPlaceId = getClosestPlaceFromParent(listPlaces);
             placeListWithIds.add(new PlaceNode(seqNo, closestPlaceId));
             listPlaces = graph.get(closestPlaceId);
             placeId = closestPlaceId;
-            seqNo += 1;
             count += 1;
         }
-        /*for(Map.Entry<String,ArrayList<Tuple>> entry: graph.entrySet()){
+        *//*for(Map.Entry<String,ArrayList<Tuple>> entry: graph.entrySet()){
             placeId = entry.getKey();
             if(visited.size() == 0) {
                 visited.add(placeId);
@@ -89,9 +109,24 @@ public class RouteServiceImpl implements RouteService {
             closestPlaceId = getClosestPlaceFromParent(listPlaces);
             placeListWithIds.add(new PlaceNode(seqNo, closestPlaceId));
             seqNo += 1;
-        }*/
+        }*//*
         return placeListWithIds;
+*/
+    }
 
+    private String getNextNode(ArrayList<Tuple> childNodes, ArrayList<String> visitedNodes) {
+        ArrayList<Tuple> nodesToCheck = new ArrayList<Tuple>();
+
+        Tuple minTuple = childNodes.stream().max(Comparator.comparing(Tuple::getWeight)).get();
+        int min = minTuple.getWeight();
+        for (Tuple node: childNodes) {
+            if(!visitedNodes.contains(node.getPlace_id()) && node.getWeight()<=min){
+                minTuple = node;
+                min = node.getWeight();
+            }
+        }
+
+        return minTuple.getPlace_id();
     }
 
     private String getClosestPlaceFromParent(ArrayList<Tuple> listPlaces){
@@ -111,6 +146,7 @@ public class RouteServiceImpl implements RouteService {
     @Getter
     @Setter
     @AllArgsConstructor
+    @NoArgsConstructor
     public class Tuple{
         String place_id;
         int weight;
