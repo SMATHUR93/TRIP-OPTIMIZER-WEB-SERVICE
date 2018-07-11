@@ -151,7 +151,7 @@ app.controller('tripOptimizerController', function($scope, $http) {
 
         //var loc = (!$scope.searchPlace.gm_accessors_)?($scope.searchPlace):(($scope.searchPlace.gm_accessors_.place)?($scope.searchPlace.gm_accessors_.place.jd.formattedPrediction):(""));
         //var uri = "http://localhost:8080/api/getplaces?place="+loc;
-        var resUrl = encodeURI("http://localhost:8080/api/getoptimalroute");
+        var resUrl = encodeURI("http://localhost:8080/api/getoptimalroute?source="+jsonData[0].place_id);
 
         $http({
             method : "POST",
@@ -180,7 +180,7 @@ app.controller('tripOptimizerController', function($scope, $http) {
             }
             console.log(orderingAtUI);
             var mapCanvas = document.getElementById("optimizationMap");
-            var mapOptions = {center: orderingAtUI[0], zoom: 17};
+            var mapOptions = {center: orderingAtUI[0], zoom: 14};
             var map = new google.maps.Map(mapCanvas,mapOptions);
 
             var flightPath = new google.maps.Polyline({

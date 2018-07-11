@@ -2,16 +2,7 @@
 <div class="container" ng-show="arePlacesChecked">
 
 	<div ng-repeat="place in orderedPlacesSlection">
-		<div class="col-md-8 cms-boxes-outer">
-			<div class="cms-boxes-items cms-features">
-				<div class="boxes-align">
-					<div class="small-box">
-						<!--<i class="fa fa-4x fa-laptop">&nbsp;</i>-->
-						<h3>{{place.name}}</h3>
-					</div>
-				</div>
-			</div>
-		</div>
+		<h3>{{place.sequence_no+1}}.&nbsp;&nbsp;{{place.name}}</h3>
 	</div>
 	<!--<section class="cms-boxes">
 	   <div class="container-fluid">

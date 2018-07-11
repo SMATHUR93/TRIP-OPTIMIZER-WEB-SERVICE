@@ -33,7 +33,7 @@ public class PlaceSearchController {
     }
 
     @RequestMapping(value = "/getoptimalroute",method = RequestMethod.POST)
-    public ArrayList<PlaceNode> getOptimalRoute(@RequestBody ArrayList<PlaceNode> optimalRouteRequest,@RequestParam(value = "source", required = true) String source ){
+    public ArrayList<PlaceNode> getOptimalRoute(@RequestBody ArrayList<PlaceNode> optimalRouteRequest,@RequestParam(value = "source", required = false) String source ){
         return routeService.computeOptimalRoute(optimalRouteRequest,source);
     }
 
