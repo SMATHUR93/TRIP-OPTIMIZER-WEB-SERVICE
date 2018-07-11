@@ -57,7 +57,12 @@
 		    <location-cards-carousals-container></location-cards-carousals-container>
 		    <output-optimization-map></output-optimization-map>
 		    <output-path-tiles></output-path-tiles>
-		    
+
+			<div class="form-group findTripButton" ng-show="isPlaceSearched">
+				<div class="col-xs-offset-2 col-xs-10">
+					<button class="btn btn-success" ng-click="getOptimalTrip()">Find Optimal Trip</button>
+				</div>
+			</div>
 		    <footer class="footer">
 			    <span class="text-muted">&nbsp;&nbsp;Trip Optimizer version 1.0.5 July 2018.</span>
 			</footer>

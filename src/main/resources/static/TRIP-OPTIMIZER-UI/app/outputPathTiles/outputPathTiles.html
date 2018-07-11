@@ -1,6 +1,19 @@
 
-<div class="container" ng-show="areLocationsProvided">
-	<section class="cms-boxes">
+<div class="container" ng-show="arePlacesChecked">
+
+	<div ng-repeat="place in orderedPlacesSlection">
+		<div class="col-md-8 cms-boxes-outer">
+			<div class="cms-boxes-items cms-features">
+				<div class="boxes-align">
+					<div class="small-box">
+						<!--<i class="fa fa-4x fa-laptop">&nbsp;</i>-->
+						<h3>{{place.name}}</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!--<section class="cms-boxes">
 	   <div class="container-fluid">
 	      <div class="row">
 	         <div class="col-md-4 cms-boxes-outer">
@@ -62,5 +75,5 @@
 	         </div>
 	      </div>
 	   </div>
-	</section>
+	</section>-->
 </div>

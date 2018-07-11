@@ -1,11 +1,11 @@
-<form  ng-show="isPlaceProvided" name="tripDetailsForm" class="form-horizontal" novalidate 
+<form  ng-show="isPlaceSearched" name="tripDetailsForm" class="form-horizontal" novalidate
 		    ng-submit="send()">
     <div class="form-group">
         <label for="sourceField" class="col-xs-2 control-label">Source</label>
         <div class="col-xs-10">
             <!-- <input name="sourceField" type="text" class="form-control" 
             ng-model="place.source" required /> -->
-            <select name="sourceField" type="text" class="form-control" 
+            <select name="sourceField" value="" type="text" class="form-control"
             ng-model="place.source" required
             ng-options="obj as obj.name for obj in placesData.allplaces"> <!-- ng-change="projectFill2()" -->
             </select> 

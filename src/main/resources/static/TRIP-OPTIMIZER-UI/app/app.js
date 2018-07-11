@@ -77,33 +77,30 @@ app.service('Map', function($q) {
 
 app.controller('tripOptimizerController', function($scope, $http) {
     
-    $scope.isPlaceProvided=false;
-    $scope.areLocationsProvided=false;
+    $scope.isPlaceSearched=false;
+    $scope.arePlacesChecked=false;
     $scope.apiError = false;
     $scope.placesData = {};
     $scope.placesData.allplaces = [];
-    
+
+    $scope.selection = [];
+    $scope.orderedPlacesSlection = [];
+
+    // Toggle selection for a given fruit by name
+    $scope.toggleSelection = function toggleSelection(place_id) {
+        var idx = $scope.selection.indexOf(place_id);
+        // Is currently selected
+        if (idx > -1) {
+            $scope.selection.splice(idx, 1);
+        }
+        // Is newly selected
+        else {
+            $scope.selection.push(place_id);
+        }
+        console.log($scope.selection);
+    };
+
    $scope.search = function() {
-        
-        /*var responsePromise = $http.post("http://localhost:8080/api/getplaces?place=%22bangalore%22",$scope.user.uid);
-        responsePromise.success(function(data,
-                status, headers, config) {
-            console.log("HELLO");
-            console.log(data);
-            $scope.current.account=data.accountName;
-            $scope.current.project=data.projectId;
-            $scope.current.location=data.location;
-            $scope.current.grade=data.grade;
-            billRate1=data.billRate;
-            document.getElementById("current.account").innerHTML=data.accountName;
-            document.getElementById("current.project").innerHTML=data.projectId;
-            document.getElementById("current.location").innerHTML=data.location;
-            document.getElementById("current.grade").innerHTML=data.grade;
-            //document.getElementById("average1").innerHTML=data.billRate;
-            console.log("BYE");
-        }).error(function(){
-            $scope.apiError = false;
-        });*/
 
         var loc = (!$scope.searchPlace.gm_accessors_)?($scope.searchPlace):(($scope.searchPlace.gm_accessors_.place)?($scope.searchPlace.gm_accessors_.place.jd.formattedPrediction):(""));
         var uri = "http://localhost:8080/api/getplaces?place="+loc;
@@ -125,13 +122,84 @@ app.controller('tripOptimizerController', function($scope, $http) {
             }
             //$scope.places = [];
             $scope.apiError = false;
-            $scope.isPlaceProvided = true;
+            $scope.isPlaceSearched = true;
         }, function myError(response) {
             $scope.apiError = true;
         });
 
-    }
-    
+    };
+
+
+    $scope.getOptimalTrip = function(){
+
+        var selectionArray = $scope.selection;
+        var allPlaces = $scope.placesData.allplaces;
+        var jsonData = [];
+
+        for(var idx in allPlaces){
+            if(selectionArray.indexOf(allPlaces[idx].place_id)!=-1){
+                jsonData.push({
+                    "sequence_no":0,
+                    "geo_location": {
+                        "lat": allPlaces[idx].geometry.location.lat,
+                        "lng": allPlaces[idx].geometry.location.lng
+                    },
+                    "place_id":allPlaces[idx].place_id
+                });
+            }
+        }
+
+        //var loc = (!$scope.searchPlace.gm_accessors_)?($scope.searchPlace):(($scope.searchPlace.gm_accessors_.place)?($scope.searchPlace.gm_accessors_.place.jd.formattedPrediction):(""));
+        //var uri = "http://localhost:8080/api/getplaces?place="+loc;
+        var resUrl = encodeURI("http://localhost:8080/api/getoptimalroute");
+
+        $http({
+            method : "POST",
+            url : resUrl,
+            data: jsonData
+        }).then(function mySuccess(response) {
+            //$scope.myWelcome = response.data;
+            var responseOrderedMapItems = response.data;
+            var orderingAtUI = [];
+            for(var idx in responseOrderedMapItems){
+                for(var idy in allPlaces){
+                    if(allPlaces[idy].place_id===responseOrderedMapItems[idx].place_id){
+                        orderingAtUI.push(new google.maps.LatLng( allPlaces[idy].geometry.location.lat, allPlaces[idy].geometry.location.lng) );
+                        $scope.orderedPlacesSlection.push({
+                            "sequence_no":responseOrderedMapItems[idx].sequence_no,
+                            "geo_location": {
+                                "lat": allPlaces[idy].geometry.location.lat,
+                                "lng": allPlaces[idy].geometry.location.lng
+                            },
+                            'name': allPlaces[idy].name,
+                            "place_id":allPlaces[idy].place_id
+                        });
+                        break;
+                    }
+                }
+            }
+            console.log(orderingAtUI);
+            var mapCanvas = document.getElementById("optimizationMap");
+            var mapOptions = {center: orderingAtUI[0], zoom: 17};
+            var map = new google.maps.Map(mapCanvas,mapOptions);
+
+            var flightPath = new google.maps.Polyline({
+                path: orderingAtUI,
+                strokeColor: "#0000FF",
+                strokeOpacity: 0.8,
+                strokeWeight: 2
+            });
+            flightPath.setMap(map);
+
+            $scope.apiError = false;
+            $scope.isPlaceSearched = false;
+            $scope.arePlacesChecked = true;
+        }, function myError(response) {
+            $scope.apiError = true;
+        });
+
+    };
+
     /*$scope.send = function() {
         alert($scope.place.name + ' : ' + $scope.place.lat + ', ' + $scope.place.lng);    
     }*/
@@ -167,6 +235,7 @@ app.controller('tripOptimizerController', function($scope, $http) {
     //Map.init();
 });*/
 
+/*
 function myMap() {
   var stavanger = new google.maps.LatLng(58.983991,5.734863);
   var amsterdam = new google.maps.LatLng(52.395715,4.888916);
@@ -183,4 +252,4 @@ function myMap() {
     strokeWeight: 2
   });
   flightPath.setMap(map);
-}  
+}*/
