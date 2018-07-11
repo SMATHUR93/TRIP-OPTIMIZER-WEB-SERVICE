@@ -77,7 +77,7 @@ app.service('Map', function($q) {
 
 app.controller('tripOptimizerController', function($scope, $http) {
     
-    $scope.isPlaceProvided=true;
+    $scope.isPlaceProvided=false;
     $scope.areLocationsProvided=false;
     $scope.apiError = false;
     $scope.placesData = {};
@@ -125,6 +125,7 @@ app.controller('tripOptimizerController', function($scope, $http) {
             }
             //$scope.places = [];
             $scope.apiError = false;
+            $scope.isPlaceProvided = true;
         }, function myError(response) {
             $scope.apiError = true;
         });
